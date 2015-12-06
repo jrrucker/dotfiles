@@ -18,6 +18,10 @@ sudo npm install -g bower
 sudo npm install -g grunt-cli
 sudo npm install --global gulp
 
+# Install Express Server
+
+sudo npm install -g express-generator
+
 # Install Yeoman for Project Scaffolding
 
 sudo npm install -g yo

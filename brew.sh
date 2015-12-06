@@ -61,5 +61,8 @@ brew install node
 # Install io.js
 brew install iojs
 
+# Install nginx
+brew install nginx
+
 # Remove outdated versions from the cellar.
 brew cleanup

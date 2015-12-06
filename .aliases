@@ -13,6 +13,8 @@ alias dt="cd ~/Desktop"
 alias www="cd ~/Sites"
 alias g="git"
 alias mamp="open /Applications/MAMP/MAMP.app"
+alias xstart="sudo nginx"
+alias xstop="sudo nginx -s stop"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
