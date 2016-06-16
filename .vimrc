@@ -1,93 +1,66 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
+filetype plugin indent on     " required
 
-let mapleader=","				" Change mapleader
-
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'git://git.wincent.com/command-t.git'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'kien/ctrlp.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'notpratheek/vim-luna'
-call vundle#end()
-
-filetype plugin indent on    " required
+" =============================================================================================
+" display settings  ===========================================================================
+" =============================================================================================
 
 " colorscheme
 try
-    colorscheme luna
+	colorscheme luna
 catch
 endtry
 
-" Toggle NERDTree
-nmap <leader>; :NERDTreeToggle<cr>
-let NERDTreeShowBookmarks = 1
+set guifont=Inconsolata\ for\ Powerline   " installed from https://github.com/powerline/fonts
+set t_Co=256                              " enable 256 colors
+set ruler                                 " Show the cursor position
 
-" Airline Options
-let g:airline_theme='luna'
-let g:airline_powerline_fonts=1
-set guifont=Inconsolata\ for\ Powerline
-set t_Co=256
+" =============================================================================================
+" general settings ============================================================================
+" =============================================================================================
 
-" General VIM settings
-set clipboard=unnamed   		" Use the OS clipboard by default (on versions compiled with `+clipboard`)
-set wildmenu            		" Enhance command-line completion
-set esckeys             		" Allow cursor keys in insert mode
-set backspace=indent,eol,start 	" Allow backspace in insert mode
-set ttyfast						" Optimize for fast terminal connections
-set gdefault					" Add the g flag to search/replace by default
-set encoding=utf-8 nobomb		" Use UTF-8 without BOM
+let mapleader=","               " Change mapleader
 
-set binary						" Don’t add empty newlines at the end of files
-set noeol 						" Centralize backups, swapfiles and undo history
+set clipboard=unnamed           " Use the OS clipboard
+set wildmenu                    " Enhance command-line completion
+set esckeys                     " Allow cursor keys in insert mode
+set backspace=indent,eol,start  " Allow backspace in insert mode
+set ttyfast                     " Optimize for fast terminal connections
+set gdefault                    " Add the g flag to search/replace by default
+set encoding=utf-8 nobomb       " Use UTF-8 without BOM
+set binary                      " Don’t add empty newlines at the end of files
+set noeol                       " Centralize backups, swapfiles and undo history
 
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
-if exists("&undodir")
-	set undodir=~/.vim/undo
-endif
-
-" Don’t create backups when editing files in certain directories
-set backupskip=/tmp/*,/private/tmp/*
-
-" Respect modeline in files
-set modeline
+syntax on                       " Enable syntax highlighting
+set autoread                    " Autoread file when change externally
+set modeline                    " Respect modeline in files
 set modelines=4
-set exrc						" Enable per-directory .vimrc files and disable unsafe commands in them
+set exrc                        " Enable per-directory .vimrc files and disable unsafe commands in them
 set secure
-" set numbers 					" Enable line numbers
-syntax on 						" Enable syntax highlighting
-" set cursorline 					" Highlight current line
-set tabstop=2					" Make tabs as wide as two spaces
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_ 	" Show “invisible” characters
+set number                      " Enable line numbers
+set tabstop=4                   " Make tabs as wide as two spaces
+set shiftwidth=4
+set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_    " Show “invisible” characters
 set list
-set hlsearch 					" Highlight searches
-set ignorecase					" Ignore case of searches
-set incsearch					" Highlight dynamically as pattern is typed
-set laststatus=2				" Always show status line
-set mouse=a 					" Enable mouse in all modes
-set noerrorbells 				" Disable error bells
-set nostartofline 				" Don’t reset cursor to start of line when moving around.
-set ruler 						" Show the cursor position
-set shortmess=atI 				" Don’t show the intro message when starting Vim
-set showmode 					" Show the current mode
-set title 						" Show the filename in the window titlebar
-set showcmd 					" Show the (partial) command as it’s being typed
-
-" Use relative line numbers
-if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
-endif
+set hlsearch                    " Highlight searches
+set ignorecase                  " Ignore case of searches
+set incsearch                   " Highlight dynamically as pattern is typed
+set laststatus=2                " Always show status line
+set mouse=a                     " Enable mouse in all modes
+set noerrorbells                " Disable error bells
+set nostartofline               " Don’t reset cursor to start of line when moving around.
+set shortmess=atI               " Don’t show the intro message when starting Vim
+set showmode                    " Show the current mode
+set title                       " Show the filename in the window titlebar
+set showcmd                     " Show the (partial) command as it’s being typed
 
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
+
+" =============================================================================================
+" command mappings ============================================================================
+" =============================================================================================
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
@@ -111,3 +84,50 @@ if has("autocmd")
 	" Treat .md files as Markdown
 	autocmd BufNewFile,BufRead *.md setlocal filetype=markdown
 endif
+
+" Fast saving & exit
+nmap <leader>w :w!<cr>
+nmap <leader>x :x!<cr>
+nmap <leader>q :q<cr>
+
+map <space> /
+nnoremap <silent> <leader><space> :nohl<CR>
+map <leader><tab> :tabn<cr>
+map <leader><esc> :tabp<cr>
+
+" =============================================================================================
+" vundle plugins ==============================================================================
+" =============================================================================================
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/syntastic'
+Plugin 'kien/ctrlp.vim'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'notpratheek/vim-luna'
+call vundle#end()
+
+" =============================================================================================
+" plugin options ++============================================================================
+" =============================================================================================
+
+" airline
+let g:airline_theme='luna'
+let g:airline_powerline_fonts=1
+
+" nerdtree
+nmap <leader>; :NERDTreeToggle<cr>
+let NERDTreeShowBookmarks = 1
+
+" syntastic
+let g:syntastic_check_on_open=1          " Run syntax checks on file open
+let g:syntastic_error_symbol='✗'         " Set syntax check symbols
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_enable_highlighting = 0  " Turn off error highlighting, symbols are plenty
+let g:syntastic_javascript_checkers = ['jshint', 'jscs']    " Set languange checkers
