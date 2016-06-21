@@ -3,20 +3,6 @@ filetype off                  " required
 filetype plugin indent on     " required
 
 " =============================================================================================
-" display settings  ===========================================================================
-" =============================================================================================
-
-" colorscheme
-try
-	colorscheme luna
-catch
-endtry
-
-set guifont=Inconsolata\ for\ Powerline   " installed from https://github.com/powerline/fonts
-set t_Co=256                              " enable 256 colors
-set ruler                                 " Show the cursor position
-
-" =============================================================================================
 " general settings ============================================================================
 " =============================================================================================
 
@@ -58,6 +44,8 @@ set showcmd                     " Show the (partial) command as it’s being typ
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/bower_components/*,*/node_modules/*,*/functional-test/*,*/response-management-agent-tests/*
+
 " =============================================================================================
 " command mappings ============================================================================
 " =============================================================================================
@@ -90,10 +78,10 @@ nmap <leader>w :w!<cr>
 nmap <leader>x :x!<cr>
 nmap <leader>q :q<cr>
 
-map <space> /
-nnoremap <silent> <leader><space> :nohl<CR>
+nnoremap <silent> <leader>, :nohl<cr>
 map <leader><tab> :tabn<cr>
 map <leader><esc> :tabp<cr>
+nnoremap <leader><space> :Ag<space>
 
 " =============================================================================================
 " vundle plugins ==============================================================================
@@ -110,24 +98,69 @@ Plugin 'scrooloose/syntastic'
 Plugin 'kien/ctrlp.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'notpratheek/vim-luna'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'rking/ag.vim'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'christoomey/vim-tmux-navigator'
 call vundle#end()
 
 " =============================================================================================
-" plugin options ++============================================================================
+" plugin options ==============================================================================
 " =============================================================================================
 
 " airline
-let g:airline_theme='luna'
+let g:airline_theme='solarized'
 let g:airline_powerline_fonts=1
 
 " nerdtree
 nmap <leader>; :NERDTreeToggle<cr>
 let NERDTreeShowBookmarks = 1
+let NERDTreeShowHidden = 1
+let g:NERDTreeIgnore=['bower_components', 'node_modules', '.git', 'functional-test', 'dist', 'response-management-agent-tests', '.sass-cache']
 
 " syntastic
 let g:syntastic_check_on_open=1          " Run syntax checks on file open
 let g:syntastic_error_symbol='✗'         " Set syntax check symbols
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_enable_highlighting = 0  " Turn off error highlighting, symbols are plenty
-let g:syntastic_javascript_checkers = ['jshint', 'jscs']    " Set languange checkers
+let g:syntastic_javascript_checkers = ['jshint', 'jscs']    " Set languange checker
+
+" ctrlp
+let g:ctrlp_custom_ignore = {
+  \  'dir': '\v[\/]\.(git|hg|svn|node_modules|.sass-cache|bower_components|dist|functional-test|response-management-agent-tests)$'
+  \  }
+
+" =============================================================================================
+" display settings  ===========================================================================
+" =============================================================================================
+
+" colorscheme
+syntax enable
+set background=dark
+colorscheme solarized
+
+let g:solarized_termcolors=256
+
+set background=dark
+set cursorline
+
+set guifont=Inconsolata\ for\ Powerline   " installed from https://github.com/powerline/fonts
+set t_Co=256                              " enable 256 colors
+set ruler                                 " Show the cursor position
+
+au BufReadPost *.hbs set syntax=mustache
+au BufReadPost Jenkinsfile set syntax=groovy
+
+" =============================================================================================
+" temporary stuff =============================================================================
+" =============================================================================================
+
+" disable arrow keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
+" disable mouse scroll
+autocmd BufEnter * set mouse=
